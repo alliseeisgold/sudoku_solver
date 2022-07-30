@@ -1,53 +1,49 @@
 #ifndef SUDOKU_H
 #define SUDOKU_H
-
 #include <stdio.h>
 #include <stdlib.h>
 
-// global variable
 extern int UNSOLVED;
 extern int SIZE_ROWS;
 extern int SIZE_COLUMNS;
 
 typedef struct Sudoku {
     struct Square*** squares;
-    struct Box** boxes; 
+    struct Box** boxes;
 } Sudoku;
 
-
 typedef struct Box {
-    struct Square** squares;
+    struct Squares** squares;
     int numbers;
     int possible[9];
     int solvable;
-
     struct Box* next;
 } Box;
 
-typedef struct Square
-{
+typedef struct Square {
     int number;
-    /*
-        [0, 0, 0, 0, 0, 0, 0, 0, 0]
-        [9, 8, 7, 6, 5, 4, 3, 2, 1] index
-    */
+    /* [1] [1] [1] [1] [0] [1] [1] [1] [1]
+       [9] [8] [7] [6] [5] [4] [3] [2] [1] index*/
     int possible[9];
     int solvable;
-    Box *box;
+    Box* box;
     int row;
     int column;
 } Square;
 
-int ** createPuzzle();
+int** createPuzzle();
 void printPuzzle(Square*** puzzle);
 Sudoku* setUpPuzzle(int** puzzle);
-Sudoku* createSudoku(Square*** puzzle, Box** boxes);
-int checkPuzzle(Square*** sudoku, Box** boxes);
+
+Sudoku* createSudoku(Square*** squares, Box** boxes);
 int updateSudoku(Square*** sudoku, int row, int column);
+int checkPuzzle(Square*** sudoku, Box** boxes);
+int boxSingles(Square*** sudoku, Box** boxes);
 int solveSquare(Square* square);
-
-/*box functions*/
-Box** createBox();
+int checkRows(Square*** sudoku, Box** boxes);
+// box functions
+Box** createBoxes();
 int updateBoxes(Square*** sudoku, int row, int column);
-#endif
 
+
+#endif
