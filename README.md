@@ -1,1 +1,1 @@
-### Sudoku solver with C and C++
+### Sudoku solver in C 
